@@ -11,6 +11,27 @@ from telebot import types
 bot = telebot.TeleBot(config.token)
 logging.basicConfig(level=logging.INFO, filename='mainlog.log', filemode='w', format='%(asctime)s %(levelname)s %(message)s')
 
+def get_emoji_num(num):
+    if num == 1:
+        text = texts.num_text1
+
+    elif num == 2:
+        text = texts.num_text2
+
+    elif num == 3:
+        text = texts.num_text3
+
+    elif num == 4:
+        text = texts.num_text4
+
+    elif num == 5:
+        text = texts.num_text5
+
+    elif num == 6:
+        text = texts.num_text6
+
+    return text
+
 def check_nums(number, bot_number):
     if number > bot_number:
         pass
@@ -39,13 +60,14 @@ def start_game(message):
 def check_text(message):
     if message.text == texts.but_throw_text:
         num = random.randint(1, 6)
-        bot.send_message(message.chat.id, f'{texts.num_text} <b>{num}</b>', parse_mode='html')
+        bot.send_message(message.chat.id, f'{texts.num_text} <b>{get_emoji_num(num)}</b>', parse_mode='html')
+
+        time.sleep(1)
         bot.send_message(message.chat.id, f'<i>{texts.bot_num_text1}</i>', parse_mode='html')
 
         time.sleep(3)
-
         bot_num = random.randint(1, 6)
-        bot.send_message(message.chat.id, f'<i>{texts.bot_num_text2} <b>{bot_num}</b></i>', parse_mode='html')
+        bot.send_message(message.chat.id, f'<i>{texts.bot_num_text2} <b>{get_emoji_num(bot_num)}</b></i>', parse_mode='html')
         check_nums(num, bot_num)
 
 if __name__ == '__main__':
